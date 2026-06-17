@@ -1,0 +1,185 @@
+using System;
+
+namespace Boss_Fight
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const string SwordHitCommand = "1";
+            const string FireBallCommand = "2";
+            const string ExplosionCommand = "3";
+            const string HealCommand = "4";
+
+            Random random = new Random();
+
+            int minPlayerHealthRandomValue = 500;
+            int maxPlayerHealthRandomValue = 600;
+            int minPlayerManaRandomValue = 200;
+            int maxPlayerManaRandomValue = 300;
+            int minSwordDamageRandomValue = 150;
+            int maxSwordDamageRandomValue = 180;
+            int minFireBallDamageRandomValue = 180;
+            int maxFireBallDamageRandomValue = 200;
+            int minExplosionDamageRandomValue = 200;
+            int maxExplosionDamageRandomValue = 220;
+
+            int maxPlayerHealth = random.Next(minPlayerHealthRandomValue, maxPlayerHealthRandomValue);
+            int maxPlayerMana = random.Next(minPlayerManaRandomValue, maxPlayerManaRandomValue);
+            int currentPlayerHealth = maxPlayerHealth;
+            int currentPlayerMana = maxPlayerMana;
+            int swordDamage = random.Next(minSwordDamageRandomValue, maxSwordDamageRandomValue);
+            int fireBallDamage = random.Next(minFireBallDamageRandomValue, maxFireBallDamageRandomValue);
+            int fireBallManaCost = 130;
+            int explosionDamage = random.Next(minExplosionDamageRandomValue, maxExplosionDamageRandomValue);
+            int numberOfHealTries = 1;
+            bool canUseExplosion = false;
+
+            int minBossHealthRandomValue = 900;
+            int maxBossHealthRandomValue = 1000;
+            int minBossDamageRandomValue = 180;
+            int maxBossDamageRandomValue = 220;
+
+            int maxBossHealth = random.Next(minBossHealthRandomValue, maxBossHealthRandomValue);
+            int currentBossHealth = maxBossHealth;
+            int bossDamage = random.Next(minBossDamageRandomValue, maxBossDamageRandomValue);
+
+            Console.WriteLine("Добро пожаловать в финальную битву с боссом, Воин! " +
+                "Вы прошли долгий путь, на котором бесчисленное множество врагов было повержено " +
+                "благодаря вашим навыкам, острыму мечу и магии. " +
+                "Наконец, вы добрались до огромного, свирепого и могучего кентавра, " +
+                "способного уничтожить любого, кто посмеет оказаться перед ним, " +
+                "и стерегущего вход в свою сокровищницу, в которой хранятся неисчилимые богатства. " +
+                "Одолейте кентавра и заполучите эти богатства!");
+
+            Console.ForegroundColor = ConsoleColor.Blue;
+            Console.WriteLine($"\nУ вас {maxPlayerHealth} здоровья и {maxPlayerMana} маны.\n" +
+                $"У босса {maxBossHealth} здоровья и {bossDamage} урона.\n");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            Console.WriteLine($"В вашем арсенале для битвы с кентавром имеются:\n" +
+                $"{SwordHitCommand} - удар мечом, наносит {swordDamage} урона;\n" +
+                $"{FireBallCommand} - Огненный шар: вы выпускаете в противника огненный шар, " +
+                $"наносящий {fireBallDamage} урона (при этом тратится {fireBallManaCost} маны);\n" +
+                $"{ExplosionCommand} - взрыв огненного шара, который наносит " +
+                $"{explosionDamage} урона (возможно применить только сразу после применения " +
+                $"способности Огненный шар);\n" +
+                $"{HealCommand} - восстанавливает здоровье и ману до максимального значения " +
+                $"(за бой можно использовать {numberOfHealTries} раз).\n");
+
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Да начнется битва!\n");
+            Console.ForegroundColor = ConsoleColor.White;
+
+            while (currentPlayerHealth > 0 && currentBossHealth > 0)
+            {
+                Console.Write("Выберите команду: ");
+                string userInput = Console.ReadLine();
+
+                Console.ForegroundColor = ConsoleColor.Green;
+
+                switch (userInput)
+                {
+                    case SwordHitCommand:
+                        currentBossHealth -= swordDamage;
+                        Console.WriteLine($"Вы мастерским и отточенным движением рассекаете " +
+                            $"противника мечом, нанося ему {swordDamage} урона.");
+
+                        canUseExplosion = false;
+                        break;
+
+                    case FireBallCommand:
+                        if (currentPlayerMana >= fireBallManaCost)
+                        {
+                            currentBossHealth -= fireBallDamage;
+                            currentPlayerMana -= fireBallManaCost;
+
+                            Console.WriteLine("Вы запускаете в кентавра огненный шар " +
+                                $"концентрированной энергии и наносите оппоненту {fireBallDamage} урона.\n");
+
+                            canUseExplosion = true;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Недостаточно маны! Вы пропускаете ход.\n");
+                        }
+                        break;
+
+                    case ExplosionCommand:
+                        if (canUseExplosion == true)
+                        {
+                            currentBossHealth -= explosionDamage;
+
+                            Console.WriteLine("Достигнув противника, огненный шар взрывается " +
+                                $"и отнимает у него {explosionDamage} здоровья.\n");
+
+                            canUseExplosion = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Эту способность можно использовать " +
+                                "только после применения Огненного шара. Вы пропускаете ход.\n");
+                        }
+                        break;
+
+                    case HealCommand:
+                        if (numberOfHealTries != 0)
+                        {
+                            int healAmount = maxPlayerHealth - currentPlayerHealth;
+                            int manaHealAmount = maxPlayerMana - currentPlayerMana;
+
+                            currentPlayerHealth += healAmount;
+                            currentPlayerMana += manaHealAmount;
+
+                            Console.WriteLine("Вы восстановили все свое здоровье и ману.\n");
+
+                            canUseExplosion = false;
+                            numberOfHealTries--;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Вы не можете применить эту способность " +
+                                "и пропускаете ход.\n");
+
+                            canUseExplosion = false;
+                        }
+                        break;
+
+                    default:
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.WriteLine("\nВы промахнулись, не причинив вреда противнику.\n");
+                        Console.ForegroundColor = ConsoleColor.White;
+
+                        canUseExplosion = false;
+                        break;
+                }
+
+                Console.ForegroundColor = ConsoleColor.Red;
+                currentPlayerHealth -= bossDamage;
+                Console.WriteLine($"Кентавр атакует, нанося вам {bossDamage} урона.\n");
+
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.WriteLine($"Босс: {currentBossHealth} здоровья.");
+                Console.WriteLine($"Воин: {currentPlayerHealth} здоровья, {currentPlayerMana} маны.\n");
+            }
+
+            if (currentPlayerHealth <= 0 && currentBossHealth <= 0)
+            {
+                Console.WriteLine("И воин, и кентавр пали в жестоком бою, " +
+                    "оставив сокровища любому, кто их найдет.");
+            }
+            else if (currentPlayerHealth <= 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine("Воин не смог одолеть сильного противника " +
+                    "и пал смертью храбрых.");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Вы одолели поистине могучего кентавра " +
+                    "теперь сокровища принадлежат только вам! Поздравляем с победой!");
+            }
+        }
+    }
+}

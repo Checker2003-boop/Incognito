@@ -1,0 +1,27 @@
+using System;
+
+namespace Multiples_of_numbers
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int minimumNumber = 10;
+            int maximumNumber = 25;
+            int number = new Random().Next(minimumNumber, maximumNumber + 1);
+            int count = 0;
+            int minimumRange = 50;
+            int maximumRange = 150;
+
+            for (int i = number; i <= maximumRange; i += number)
+            {
+                if (i >= minimumRange)
+                {
+                    count++;
+                }
+            }
+
+            Console.WriteLine($"Количество чисел, которые кратны {number} : {count}.");
+        }
+    }
+}

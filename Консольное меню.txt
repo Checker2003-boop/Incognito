@@ -1,0 +1,128 @@
+using System;
+
+namespace Console_menu
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const string ChangeFontColorCommand = "1";
+            const string ChangeBackgroundColorCommand = "2";
+            const string ShowRandomNumberCommand = "3";
+            const string ClearConsoleCommand = "4";
+            const string ExitCommand = "5";
+
+            string RedColor = "a";
+            string GreenColor = "b";
+            string BlueColor = "c";
+
+            Random random = new Random();
+            bool isOpen = true;
+
+            Console.WriteLine($"Добро пожаловать! В этой программе вы можете:\n\n" +
+                $"{ChangeFontColorCommand} - изменить цвет шрифта;\n" +
+                $"{ChangeBackgroundColorCommand} - изменить цвет фона;\n" +
+                $"{ShowRandomNumberCommand} - вывести на экран случайное число в заданном диапазоне;\n" +
+                $"{ClearConsoleCommand} - очистить консоль;\n" +
+                $"{ExitCommand} - выход из программы.\n");
+
+            while (isOpen)
+            {
+                Console.Write("Введите нужную команду (необходимо ввести число): ");
+                string userInput = Console.ReadLine();
+
+                switch (userInput)
+                {
+                    case ChangeFontColorCommand:
+                        Console.WriteLine("\nДоступны следующие цвета шрифта:\n" +
+                            $"{RedColor} - красный;\n" +
+                            $"{GreenColor} - зеленый;\n" +
+                            $"{BlueColor} - голубой;\n");
+
+                        Console.Write("Введите нужный цвет (необходимо ввести букву): ");
+                        string userFontColorInput = Console.ReadLine();
+
+                        if (userFontColorInput == RedColor)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Цвет шрифта изменен на красный.\n");
+                        }
+                        else if (userFontColorInput == GreenColor)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Цвет шрифта изменен на зеленый.\n");
+                        }
+                        else if (userFontColorInput == BlueColor)
+                        {
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("Цвет шрифта изменен на голубой.\n");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Введено некорректное значение. Попробуйте снова.\n");
+                        }
+                        break;
+
+                    case ChangeBackgroundColorCommand:
+                        Console.WriteLine("\nДоступны следующие цвета фона:\n" +
+                            $"{RedColor} - красный;\n" +
+                            $"{GreenColor} - зеленый;\n" +
+                            $"{BlueColor} - голубой;\n");
+
+                        Console.Write("Введите нужный цвет (необходимо ввести букву): ");
+                        string userBackgroundColorInput = Console.ReadLine();
+
+                        if (userBackgroundColorInput == RedColor)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Red;
+                            Console.WriteLine("Цвет фона изменен на красный.");
+                        }
+                        else if (userBackgroundColorInput == GreenColor)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Green;
+                            Console.WriteLine("Цвет фона изменен на зеленый.");
+                        }
+                        else if (userBackgroundColorInput == BlueColor)
+                        {
+                            Console.BackgroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("Цвет фона изменен на голубой.");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Введено некорректное значение. Попробуйте снова.\n");
+                        }
+                        break;
+
+                    case ShowRandomNumberCommand:
+                        int minRandomValue;
+                        int maxRandomValue;
+                        int randomNumber;
+
+                        Console.Write("\nВведите нижнюю границу: ");
+                        minRandomValue = Convert.ToInt32(Console.ReadLine());
+
+                        Console.Write("Введите верхнюю границу: ");
+                        maxRandomValue = Convert.ToInt32(Console.ReadLine());
+
+                        randomNumber = random.Next(minRandomValue, maxRandomValue);
+
+                        Console.WriteLine($"Готово! Случайное число в выбранном диапазоне - {randomNumber}.\n");
+                        break;
+
+                    case ClearConsoleCommand:
+                        Console.Clear();
+                        break;
+
+                    case ExitCommand:
+                        isOpen = false;
+                        Console.WriteLine("Выход из программы.");
+                        break;
+
+                    default:
+                        Console.WriteLine("Такой команды нет в списке! Повторите ввод.\n");
+                        break;
+                }
+            }
+        }
+    }
+}

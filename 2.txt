@@ -1,0 +1,29 @@
+using System;
+
+
+namespace SwappingValues
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {  
+            string name = "Yura";
+            string surname = "Shashkov";
+
+            Console.WriteLine($"{name} {surname}");
+
+            (name, surname) = (surname, name);
+
+            Console.WriteLine($"{name} {surname}");
+
+            string firstСup = "Кофе";
+            string secondCup = "Чай";
+
+            Console.WriteLine($"{firstСup} {secondCup}");
+
+            (firstСup, secondCup) = (secondCup, firstСup);
+
+            Console.WriteLine($"{firstСup} {secondCup}");
+        }
+    }
+}

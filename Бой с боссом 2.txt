@@ -1,0 +1,160 @@
+using System;
+
+namespace Boss_Fight
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+
+            const string CommandAttackEnemy = "1";
+            const string CommandUseFireball = "2";
+            const string CommandUseExplosive = "3";
+            const string CommandHeal = "4";
+            const int MaxMana = 100;
+
+            Random random = new Random();
+
+            int minDamage = 5;
+            int maxDamage = 20;
+            int minHealth = 55;
+            int maxHealth = 115;
+
+            int heroHealth = random.Next(minHealth, maxHealth + 1);
+            int maxHeroHealth = heroHealth;
+            int heroDamage;
+            int countMana = MaxMana;
+            int fireballDamage = 10;
+            int explosionDamage = 10;
+            int recoveringHealth = 10;
+            int recoveringMana = 5;
+            int countScrolsRecovering = 3;
+            int costFireballMana = 30;
+            bool isFireballActive = false;
+
+            int enemyHealth = 110;
+            int enemyDamage;
+
+            string userInput = "";
+
+            Console.WriteLine("Добро пожаловать в программу Бой с боссом!");
+            Console.WriteLine("Бой начинается!!!");
+
+            while (heroHealth > 0 && enemyHealth > 0)
+            {
+                Console.WriteLine($"Выберите действие" +
+                    $"\n{CommandAttackEnemy} - Атаковать врага " +
+                    $"\n{CommandUseFireball} - Использовать огненый шар " +
+                    $"\n{CommandUseExplosive} - Исползовать взрыв" +
+                    $"\n{CommandHeal} -  Вылечиться");
+
+                userInput = Console.ReadLine();
+                Console.Clear();
+
+                switch (userInput)
+                {
+                    case CommandAttackEnemy:
+                        Console.WriteLine($"Игрок атакует врага!");
+                        heroDamage = random.Next(minDamage, maxDamage + 1);
+                        enemyHealth -= heroDamage;
+
+                        break;
+
+                    case CommandUseFireball:
+                        Console.WriteLine("Герой вызывает огненный шар!!!");
+
+                        if (countMana >= costFireballMana)
+                        {
+                            enemyHealth -= fireballDamage;
+                            countMana -= costFireballMana;
+                            isFireballActive = true;
+
+                            Console.WriteLine($"Вы нанесли {fireballDamage} урона");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Ничего не получилось. У вас не хватает маны!!!");
+                        }
+
+                        break;
+
+                    case CommandUseExplosive:
+                        if (isFireballActive == true)
+                        {
+                            Console.WriteLine("Вы активировали взрыв");
+                            heroHealth -= explosionDamage;
+                            isFireballActive = false;
+                        }
+                        else
+                        {
+                            Console.WriteLine("У Вас ничего не получилось. Так как сначало нужно использовать огненный шар! Ход переходит к врагу");
+                        }
+
+                        break;
+
+                    case CommandHeal:
+                        Console.WriteLine($"Герой использует свиток востановления и востанавливает здоровье на {recoveringHealth} и ману на {recoveringMana}");
+
+                        if (countScrolsRecovering > 0)
+                        {
+                            heroHealth += recoveringHealth;
+                            countMana += recoveringMana;
+
+                            if (heroHealth > maxHeroHealth)
+                            {
+                                heroHealth = maxHeroHealth;
+                            }
+
+                            if (countMana > MaxMana)
+                            {
+                                countMana = MaxMana;
+                            }
+
+                            countScrolsRecovering--;
+
+                            Console.WriteLine($"У Вас осталось {countScrolsRecovering} свитков востановления");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"Вы израсходовали все свитки");
+                        }
+
+                        break;
+
+                    default:
+                        Console.WriteLine("Нет такой комманды, ход переходит к врагу");
+
+                        break;
+                }
+
+                if (enemyHealth > 0)
+                {
+                    enemyDamage = random.Next(minDamage, maxDamage + 1);
+                    heroHealth -= enemyDamage;
+                }
+
+                Console.WriteLine("Статистика");
+                Console.WriteLine($"Герой: жизни {heroHealth}\n" +
+                    $"Враг: жизни {enemyHealth}");
+            }
+
+            Console.WriteLine("Бой закончен");
+
+            if (enemyHealth < 0 && heroHealth < 0)
+            {
+                Console.WriteLine("У нас Ничья");
+            }
+            else if (enemyHealth > 0)
+            {
+                Console.WriteLine("Победил Злодей");
+            }
+            else
+            {
+                Console.WriteLine("Победил Герой");
+            }
+
+            Console.WriteLine($"Жизни Герой {heroHealth}" +
+                $"\nЖизни Врага {enemyHealth}");
+        }
+    }
+}

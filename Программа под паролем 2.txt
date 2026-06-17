@@ -1,0 +1,37 @@
+using System;
+
+namespace The_program_is_password_protected
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            const int CountAttempts = 3;
+
+            string password = "12345";
+            string userInput;
+            int currentCountAttempts = CountAttempts;
+
+            for (int i = 0; i < CountAttempts; i++)
+            {
+                Console.WriteLine("Для вывода секретного сообщения необходимо ввести пароль!!!");
+                Console.WriteLine($"У вас {CountAttempts} попыток");
+                Console.Write("Введите пароль: ");
+
+                userInput = Console.ReadLine();
+
+                if (userInput == password)
+                {
+                    Console.WriteLine("Ты большой молодец! Добро пожаловать в клуб ЯЮниор!!!");
+                    break;
+                }
+                else
+                {
+                    currentCountAttempts--;
+                    Console.WriteLine("Пароль не верный!!! Попробуйте еще разок!)");
+                    Console.WriteLine($"У Вас осталось {currentCountAttempts} попыток!");
+                }
+            }
+        }
+    }
+}

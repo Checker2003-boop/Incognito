@@ -1,0 +1,23 @@
+using System;
+
+namespace DZ_3
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int filledRows;
+
+            int pictures = 52;
+            int columns = 3;
+
+            filledRows = pictures / columns;
+            Console.WriteLine(filledRows);
+
+            float stillPictures;
+
+            stillPictures = pictures / columns / filledRows;
+            Console.WriteLine(stillPictures);
+        }
+    }
+}

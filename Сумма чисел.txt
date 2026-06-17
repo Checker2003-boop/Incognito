@@ -1,0 +1,33 @@
+using System;
+
+namespace The_sum_of_the_numbers
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            int number;
+            int randomNumberMin = 0;
+            int randomNumberMax = 101;
+            int firstMultipleNumber = 3;
+            int secondMultipleNumber = 5;
+            int sum = 0;
+
+            Random random = new Random();
+            number = random.Next(randomNumberMin, randomNumberMax);
+            Console.WriteLine($"Случайное число: {number}");
+
+            for (int i = 0; i <= number; i++)
+            {
+                if (i % firstMultipleNumber == 0 || i % secondMultipleNumber == 0)
+                {
+                    Console.WriteLine(i);
+                    sum += i;
+                }
+            }
+
+            Console.WriteLine($"Сумма всех положительных чисел которые меньше {number} (включая число),");
+            Console.WriteLine($" и числа которые кратные {firstMultipleNumber} или {secondMultipleNumber}. Сумма равна {sum}");
+        }
+    }
+}

@@ -1,0 +1,40 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Domashka
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string name = "Checker";
+            Console.WriteLine("Имя персонажа: " + name);
+            int lvl = 5;
+            Console.WriteLine("Ваш уровень: " + lvl);
+            float money = 179.5f;
+            Console.WriteLine("Ваш баланс: " + money);
+            char gender = 'M';
+            Console.WriteLine("Ваш пол: " + gender);
+            double time = 124.8;
+            Console.WriteLine("Время проведенное в игре: "+ time + 'ч');
+            string server = "Альфа";
+            Console.WriteLine("Вы играете на сервере: " + server);
+            int channel = 3;
+            Console.WriteLine("Номер канала: " + channel);
+            float inventory = 100.0f;
+            Console.WriteLine("Вещей в инвенторе: " + inventory);
+            double progress = 56.4;
+            Console.WriteLine("Достижений полученно: " + progress);
+            int userMoney;
+            userMoney = 100;
+            int productPrice;
+            productPrice = 200;
+            bool canSell = userMoney > productPrice;
+            Console.WriteLine(canSell);
+            
+        }
+    }
+}

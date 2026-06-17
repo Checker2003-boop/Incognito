@@ -1,0 +1,34 @@
+using System;
+
+namespace The_program_is_password_protected
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string password = "unique";
+            string inputname;
+            int countAttempt = 2;
+
+            Console.WriteLine("Введите пароль");
+            inputname = Console.ReadLine();
+
+            while (inputname != password && countAttempt != 0)
+            {
+                Console.WriteLine("Не правильно введен пароль." + "\n" + "У вас осталость " + countAttempt + " попытки. " + "\n" + "Введите пароль");
+                countAttempt--;
+                inputname = Console.ReadLine();
+
+                if (countAttempt == 0)
+                {
+                    Console.WriteLine("Количество попыток исчерпано");
+                }
+            }
+
+            if (inputname == password)
+            {
+                Console.WriteLine("Вывод секретного сообщения");
+            }
+        }
+    }
+}

@@ -1,0 +1,24 @@
+ using System;
+
+
+namespace Cristal
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Введите ваше количество золота: ");
+            int playerGold = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine($"Ваше количество золота: {playerGold}");
+
+            int priceCrystal = 10;
+            
+            
+            Console.Write("Сколько приобрести кристаллов: ");
+            int playerBuyCrystals = Convert.ToInt32(Console.ReadLine());
+            playerGold = playerGold - priceCrystal * playerBuyCrystals;
+
+            Console.WriteLine($"Вы приобрели {playerBuyCrystals} кристаллов. Осталось золота {playerGold}.");
+        }
+    }
+}

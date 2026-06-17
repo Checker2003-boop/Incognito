@@ -1,0 +1,35 @@
+using System;
+
+namespace Exit_control
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            string exitWord = "exit";
+            string userInput;
+            bool isActive = true;
+
+            Console.WriteLine($"Данная программа работает до тех пор, пока не будет введено слово {exitWord}.\n");
+
+            while (isActive)
+            {
+                Console.Write("Введите любое выражение: ");
+                userInput = Console.ReadLine();
+
+                if (userInput == exitWord)
+                {
+                    Console.WriteLine($"Введено слово {exitWord}. Выход из программы.\n");
+                    isActive = false;
+                }
+                else
+                {
+                    Console.WriteLine("Программа продолжает работать.");
+                    Console.Write("Нажмите любую клавишу для продолжения...");
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+            }
+        }
+    }
+}
